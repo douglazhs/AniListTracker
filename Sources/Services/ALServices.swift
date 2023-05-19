@@ -18,3 +18,10 @@ public protocol ALServices: Helpers {
     /// Update manga status
     func updateManga()
 }
+
+/// ALServices+Default Implementation
+public extension ALServices {
+    func login() { }
+    func logout() { }
+    func updateManga() { }
+}
