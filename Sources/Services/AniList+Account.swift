@@ -11,9 +11,10 @@ import AuthenticationServices
 /// AniList+Account
 public class AniList: NSObject, ObservableObject, ASWebAuthenticationPresentationContextProviding, ALServices {
     var subscriptions = Set<AnyCancellable>()
-    private (set) var accAccess: [String:String] = [:]
     
-    public func presentationAnchor(for session: ASWebAuthenticationSession) -> ASPresentationAnchor {
+    public func presentationAnchor(
+        for session: ASWebAuthenticationSession
+    ) -> ASPresentationAnchor {
         ASPresentationAnchor()
     }
     
@@ -27,7 +28,7 @@ public class AniList: NSObject, ObservableObject, ASWebAuthenticationPresentatio
                 )
                 let authSession  = ASWebAuthenticationSession(
                     url: authUrl,
-                    callbackURLScheme: apiData.redirectURL.absoluteString
+                    callbackURLScheme: apiData.redirectURL.scheme
                 ) { (url, error) in
                     if let error = error {
                         completion(.failure(error))
@@ -38,15 +39,17 @@ public class AniList: NSObject, ObservableObject, ASWebAuthenticationPresentatio
                 authSession.presentationContextProvider = self
                 authSession.prefersEphemeralWebBrowserSession = true
                 authSession.start()
-            } catch { print(error.localizedDescription) }
+            } catch {
+                completion(.failure(error))
+            }
         }
         signInPromise.sink { (completion) in
             switch completion {
-            case .failure: break
+            case .failure(_): break
             default: break
             }
         } receiveValue: { (url) in
-            self.accAccess = self.processResponseURL(url: url)
+            self.storeToken(self.getToken(from: url))
         }
         .store(in: &subscriptions)
     }

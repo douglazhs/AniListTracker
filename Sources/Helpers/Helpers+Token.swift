@@ -1,5 +1,5 @@
 //
-//  Helpers+ResponseUrl.swift
+//  Helpers+Token.swift
 //  
 //
 //  Created by Douglas Henrique de Souza Pereira on 12/05/23.
@@ -7,9 +7,9 @@
 
 import Foundation
 
-/// Helpers+ResponseUrl
+/// Helpers+Token
 public extension Helpers {
-    func processResponseURL(url: URL) -> [String:String] {
+    func getToken(from url: URL) -> [String:String] {
         let anilistComponents = URLComponents(url: url, resolvingAgainstBaseURL: true)
         
         if  let anilistFragment = anilistComponents?.fragment,
@@ -22,5 +22,9 @@ public extension Helpers {
             return ["access_token":token, "expires_in":expirationDate]
         }
         return [:]
+    }
+    
+    func storeToken(_ token: [String:String]) {
+        
     }
 }

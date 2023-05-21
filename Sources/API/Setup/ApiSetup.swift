@@ -9,7 +9,7 @@ import Foundation
 
 /// Api setup, such as: `ID`, `SECRET` and `REDIRECT URL`
 public class ApiSetup: Codable {
-    enum Error: Swift.Error {
+    enum BundleError: Swift.Error {
         case fileNotFound(name: String)
         case fileDecodingFailed(name: String, Swift.Error)
     }
@@ -28,18 +28,17 @@ public class ApiSetup: Codable {
     /// Load API informations from bundle
     /// - Returns: API informations to make the Auth request
     public static func load() throws -> ApiSetup {
-        guard let filePath = Bundle.main.url(
-            forResource: "anilist_api",
-            withExtension: "json"
-        ) else {
-            throw Error.fileNotFound(name: "anilist_api")
-        }
-        
         do {
+            guard let filePath = Bundle.main.url(
+                forResource: "anilist_api",
+                withExtension: "json"
+            ) else { throw BundleError.fileNotFound(name: "anilist_api") }
             let data = try Data(contentsOf: filePath)
-            return try JSONDecoder().decode(ApiSetup.self, from: data)
+            let object = try JSONDecoder().decode(ApiSetup.self, from: data)
+            return object
         } catch {
-            throw Error.fileDecodingFailed(name: "anilist_api", error)
+            dump(error.localizedDescription.debugDescription)
+            throw BundleError.fileDecodingFailed(name: "anilist_api", error)
         }
     }
 }

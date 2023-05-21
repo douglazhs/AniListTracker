@@ -18,5 +18,9 @@ public protocol Helpers {
     
     /// Process URL after get the authorization response
     /// - Parameter url: Received URL wiht the access `token`
-    func processResponseURL(url: URL) -> [String:String]
+    func getToken(from url: URL) -> [String:String]
+    
+    /// Store AniList access token on Keychain
+    /// - Parameter token: Retreived account access token
+    func storeToken(_ token: [String:String])
 }
