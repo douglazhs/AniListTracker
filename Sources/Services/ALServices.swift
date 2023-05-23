@@ -10,7 +10,7 @@ import Combine
 /// All AniList services in the app
 public protocol ALServices: Helpers {
     /// SignIn AniList account
-    func logIn()
+    func logIn(response: @escaping (Result) -> Void)
     
     /// SignOut AniList account
     func logOut()
@@ -21,7 +21,7 @@ public protocol ALServices: Helpers {
 
 /// ALServices+Default Implementation
 public extension ALServices {
-    func login() { }
+    func login(response: @escaping (Result) -> Void) { }
     func logout() { }
     func updateManga() { }
 }

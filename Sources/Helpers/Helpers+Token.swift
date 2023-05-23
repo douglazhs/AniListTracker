@@ -23,8 +23,4 @@ public extension Helpers {
         }
         return [:]
     }
-    
-    func storeToken(_ token: [String:String]) {
-        
-    }
 }

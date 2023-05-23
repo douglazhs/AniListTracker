@@ -8,6 +8,14 @@
 import Combine
 import AuthenticationServices
 
+/// Login tesult
+public enum Result {
+    /// Return the token and expiration date
+    case success([String:String])
+    /// Return the error of the login
+    case fail(Error)
+}
+
 /// AniList+Account
 public class AniList: NSObject, ObservableObject, ASWebAuthenticationPresentationContextProviding, ALServices {
     var subscriptions = Set<AnyCancellable>()
@@ -18,7 +26,7 @@ public class AniList: NSObject, ObservableObject, ASWebAuthenticationPresentatio
         ASPresentationAnchor()
     }
     
-    public func logIn() {
+    public func logIn(response: @escaping (Result) -> Void) {
         let signInPromise = Future<URL, Error> { completion in
             do {
                 let apiData = try ApiSetup.load()
@@ -45,11 +53,11 @@ public class AniList: NSObject, ObservableObject, ASWebAuthenticationPresentatio
         }
         signInPromise.sink { (completion) in
             switch completion {
-            case .failure(_): break
+            case .failure(let error): response(.fail(error))
             default: break
             }
         } receiveValue: { (url) in
-            self.storeToken(self.getToken(from: url))
+            response(.success(self.getToken(from: url)))
         }
         .store(in: &subscriptions)
     }
