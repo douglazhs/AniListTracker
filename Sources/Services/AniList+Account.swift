@@ -8,25 +8,9 @@
 import Combine
 import AuthenticationServices
 
-/// Login tesult
-public enum Result {
-    /// Return the token and expiration date
-    case success([String:String])
-    /// Return the error of the login
-    case fail(Error)
-}
-
 /// AniList+Account
-public class AniList: NSObject, ObservableObject, ASWebAuthenticationPresentationContextProviding, ALServices {
-    var subscriptions = Set<AnyCancellable>()
-    
-    public func presentationAnchor(
-        for session: ASWebAuthenticationSession
-    ) -> ASPresentationAnchor {
-        ASPresentationAnchor()
-    }
-    
-    public func logIn(response: @escaping (Result) -> Void) {
+public extension AniList {
+    func logIn(response: @escaping (Result) -> Void) {
         let signInPromise = Future<URL, Error> { completion in
             do {
                 let apiData = try ApiSetup.load()
@@ -58,9 +42,15 @@ public class AniList: NSObject, ObservableObject, ASWebAuthenticationPresentatio
             }
         } receiveValue: { (url) in
             response(.success(self.getToken(from: url)))
-        }
-        .store(in: &subscriptions)
+        }.store(in: &subscriptions)
     }
-    
-    public func logOut() { }
+}
+
+//AniList+WebAuthentication
+extension AniList: ASWebAuthenticationPresentationContextProviding {
+    public func presentationAnchor(
+        for session: ASWebAuthenticationSession
+    ) -> ASPresentationAnchor {
+        ASPresentationAnchor()
+    }
 }

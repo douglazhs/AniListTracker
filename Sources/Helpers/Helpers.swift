@@ -19,4 +19,9 @@ public protocol Helpers {
     /// Process URL after get the authorization response
     /// - Parameter url: Received URL wiht the access `token`
     func getToken(from url: URL) -> [String:String]
+    
+    /// Build authenticated request
+    /// - Parameter data: Query data
+    /// - Returns: Request object
+    func request<T: Codable, D: Encodable>(_ data: D, token: String?) async -> T?
 }
