@@ -24,6 +24,7 @@ extension Helpers {
         }
         request.allHTTPHeaderFields = headers
         request.httpMethod = "POST"
+        request.timeoutInterval = TimeInterval(15)
         do {
             request.httpBody = try JSONEncoder().encode(data)
             return try await URLSession.shared.object(from: request)
