@@ -20,16 +20,18 @@ public extension ALServices {
         return viewer
     }
         
-    func getFollowers(of userId: Int) async -> [User]? {
+    func getFollowers(of userId: Int, token: String? = nil) async -> [User]? {
         let followersResponse: GraphQLResponse<AniListPageResponse>? = await request(
-            GraphQLQuery(query: Queries.followers(userId).body)
+            GraphQLQuery(query: Queries.followers(userId).body),
+            token: token
         )
         return followersResponse?.data.Page?.followers
     }
     
-    func getFollowing(of userId: Int) async -> [User]? {
+    func getFollowing(of userId: Int, token: String? = nil) async -> [User]? {
         let followingResponse: GraphQLResponse<AniListPageResponse>? = await request(
-            GraphQLQuery(query: Queries.following(userId).body)
+            GraphQLQuery(query: Queries.following(userId).body),
+            token: token
         )
         return followingResponse?.data.Page?.following
     }

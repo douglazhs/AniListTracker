@@ -21,20 +21,20 @@ public protocol ALServices: Helpers {
     ///   - userId: Logged user Id
     ///   - token: Bearer of the authenticated user
     /// - Returns: Followers Array
-    func getFollowers(of userId: Int) async -> [User]?
+    func getFollowers(of userId: Int, token: String?) async -> [User]?
     
     /// Get user following users
     /// - Parameters:
     ///   - userId: Logged user Id
     ///   - token: Bearer of the authenticated user
     /// - Returns: Following users Array
-    func getFollowing(of userId: Int) async -> [User]?
+    func getFollowing(of userId: Int, token: String?) async -> [User]?
     
-    @discardableResult
     /// Update media
     /// - Parameters:
     ///   - id: Media Id
     ///   - token: Bearer of the authenticated user
+    /// - Returns: GraphQL discardable result
     func update(media id: Int, token: String) async -> GraphQLResponse<AniListUpdateResponse>?
     
     /// Get manga by Id
@@ -48,4 +48,11 @@ public protocol ALServices: Helpers {
     /// - Parameter search: Manga name
     /// - Returns: Manga results Array
     func search(manga search: String, token: String?) async -> [Media]?
+    
+    /// Follow/Unfollow user
+    /// - Parameters:
+    ///   - user: User to be followed/unfollowed
+    ///   - token: Bearer of the authenticated user
+    /// - Returns: GraphQL discardable result
+    func toggleFollow(of user: Int, token: String) async -> GraphQLResponse<AniListToggleResponse>?
 }

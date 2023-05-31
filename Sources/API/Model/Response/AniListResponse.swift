@@ -22,6 +22,10 @@ public struct AniListUpdateResponse: Codable {
     var data: SavedMediaListEntry?
 }
 
+public struct AniListToggleResponse: Codable {
+    var data: ToggleFollow?
+}
+
 /// Response of GraphQL request for media
 public struct AniListMediaResponse: Codable {
     var Media: Media?

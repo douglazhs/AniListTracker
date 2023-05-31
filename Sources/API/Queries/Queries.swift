@@ -14,7 +14,7 @@ public enum Queries {
     /// Normal query
     case search, followers(Int), following(Int), media(Int)
     /// Mutable queries
-    case update
+    case update, toggleFollow(Int)
     
     var body: String {
         switch self {
@@ -38,6 +38,14 @@ public enum Queries {
                             meanScore
                             chaptersRead
                             volumesRead
+                            genres(limit: 8) {
+                                chaptersRead
+                                genre
+                            }
+                            startYears {
+                                chaptersRead
+                                startYear
+                            }
                         }
                     }
                     siteUrl
@@ -72,6 +80,28 @@ public enum Queries {
                     followers(userId: $userID) {
                         id
                         name
+                        avatar {
+                            large
+                        }
+                        isFollowing
+                        isFollower
+                        statistics {
+                            manga {
+                                count
+                                meanScore
+                                chaptersRead
+                                volumesRead
+                                genres {
+                                    chaptersRead
+                                    genre
+                                }
+                                startYears {
+                                    chaptersRead
+                                    startYear
+                                }
+                            }
+                        }
+                        siteUrl
                     }
                 }
             }
@@ -83,6 +113,28 @@ public enum Queries {
                     following(userId: $userID) {
                         id
                         name
+                        avatar {
+                            large
+                        }
+                        isFollowing
+                        isFollower
+                        statistics {
+                            manga {
+                                count
+                                meanScore
+                                chaptersRead
+                                volumesRead
+                                genres {
+                                    chaptersRead
+                                    genre
+                                }
+                                startYears {
+                                    chaptersRead
+                                    startYear
+                                }
+                            }
+                        }
+                        siteUrl
                     }
                 }
             }
@@ -188,6 +240,14 @@ public enum Queries {
                     mediaId: $mediaId
                     status: $status
                 ) {
+                    id
+                }
+            }
+            """
+        case .toggleFollow(let userId):
+            return """
+            mutation($userId: Int = \(userId)) {
+                ToggleFollow(userId: $userId) {
                     id
                 }
             }
