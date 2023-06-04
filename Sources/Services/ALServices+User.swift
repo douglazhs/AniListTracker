@@ -9,7 +9,7 @@ import Foundation
 
 /// ALServices+User
 public extension ALServices {
-    func getUser(token: String) async -> User? {
+    func getAuthUser(token: String) async -> User? {
         let userResponse: GraphQLResponse<AniListViewerResponse>? = await request(
             GraphQLQuery(query: Queries.viewer.body),
             token: token
@@ -18,6 +18,17 @@ public extension ALServices {
               let viewer = userResponse.data.Viewer
         else { return nil }
         return viewer
+    }
+    
+    func getUser(by id: Int, token: String) async -> User? {
+        let userResponse: GraphQLResponse<AniListUserResponse>? = await request(
+            GraphQLQuery(query: Queries.user(id).body),
+            token: token
+        )
+        guard let userResponse,
+              let user = userResponse.data.User
+        else { return nil }
+        return user
     }
         
     func getFollowers(of userId: Int, token: String? = nil) async -> [User]? {

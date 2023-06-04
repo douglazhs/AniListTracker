@@ -7,6 +7,12 @@
 
 import Foundation
 
+public struct ShortUser: Identifiable, Codable {
+    public var id: Int
+    public var name: String?
+    public var avatar: UserAvatar?
+}
+
 /// AniList User
 public struct User: Identifiable, Codable {
     public var id: Int

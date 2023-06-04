@@ -12,6 +12,5 @@ public struct Page: Codable {
     var media: [Media]?
     var followers: [User]?
     var following: [User]?
+    var activities: [ActivityUnion]?
 }
-
-

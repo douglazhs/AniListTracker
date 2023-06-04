@@ -1,5 +1,5 @@
 //
-//  ALServices+Mutation.swift
+//  // ALServices+Media.swift
 //  
 //
 //  Created by Douglas Henrique de Souza Pereira on 28/05/23.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-// ALServices+Mutation
+// ALServices+GetMedia
 public extension ALServices {
     @discardableResult
     func update(media id: Int, token: String) async -> GraphQLResponse<AniListUpdateResponse>? {
@@ -24,14 +24,12 @@ public extension ALServices {
         return response
     }
     
-    @discardableResult
-    func toggleFollow(of user: Int, token: String) async -> GraphQLResponse<AniListToggleResponse>? {
-        let response: GraphQLResponse<AniListToggleResponse>? = await request(
-            GraphQLQuery(
-                query: Queries.toggleFollow(user).body
-            ),
+    func get(media id: Int, token: String? = nil) async -> Media? {
+        let response: GraphQLResponse<AniListMediaResponse>? = await request(
+            GraphQLQuery(query: Queries.media(id).body),
             token: token
         )
-        return response
+        guard let data = response?.data else { return nil }
+        return data.Media
     }
 }

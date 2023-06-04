@@ -7,49 +7,55 @@
 
 import Foundation
 
+/// Short Manga result
+public struct ShortMedia: Codable {
+    public var coverImage: MediaCoverImage?
+    public var title: MediaTitle?
+}
+
 /// Manga
 public struct Media: Codable {
-    var id: Int
-    var title: MediaTitle?
-    var format: String?
-    var status: String?
-    var description: String?
-    var startDate: FuzzyDate?
-    var endDate: FuzzyDate?
-    var chapters: Int?
-    var volumes: Int?
-    var countryOfOrigin: String?
-    var source: String?
-    var coverImage: MediaCoverImage?
-    var bannerImage: String?
-    var genres: [String]?
-    var averageScore: Int?
-    var popularity: Int?
-    var favourites: Int?
-    var characters: CharacterConnection?
-    var staff: StaffConnection?
-    var mediaListEntry: MediaList?
-    var isAdult: Bool?
+    public var id: Int
+    public var title: MediaTitle?
+    public var format: String?
+    public var status: String?
+    public var description: String?
+    public var startDate: FuzzyDate?
+    public var endDate: FuzzyDate?
+    public var chapters: Int?
+    public var volumes: Int?
+    public var countryOfOrigin: String?
+    public var source: String?
+    public var coverImage: MediaCoverImage?
+    public var bannerImage: String?
+    public var genres: [String]?
+    public var averageScore: Int?
+    public var popularity: Int?
+    public var favourites: Int?
+    public var characters: CharacterConnection?
+    public var staff: StaffConnection?
+    public var mediaListEntry: MediaList?
+    public var isAdult: Bool?
 }
 
 public struct MediaTitle: Codable {
-    var romaji: String?
-    var english: String?
+    public var romaji: String?
+    public var english: String?
 }
 
 public struct FuzzyDate: Codable {
-    var year: Int?
-    var month: Int?
-    var day: Int?
+    public var year: Int?
+    public var month: Int?
+    public var day: Int?
 }
 
 public struct MediaCoverImage: Codable {
-    var extraLarge: String?
+    public var extraLarge: String?
 }
 
 public struct MediaList: Codable {
-    var userId: Int?
-    var status: String?
-    var progress: Int?
-    var progressVolumes: Int?
+    public var userId: Int?
+    public var status: String?
+    public var progress: Int?
+    public var progressVolumes: Int?
 }

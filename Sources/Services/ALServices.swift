@@ -13,8 +13,14 @@ public protocol ALServices: Helpers {
     func logIn(response: @escaping (Result) -> Void)
     
     /// Get user informations from AniList account
+    /// - Parameter token: Bearer of the authenticated user
     /// - Returns: User object
-    func getUser(token: String) async -> User?
+    func getAuthUser(token: String) async -> User?
+    
+    /// Get user informations from AniList account
+    /// - Parameter token: Bearer of the authenticated user
+    /// - Returns: User object
+    func getUser(by id: Int, token: String) async -> User?
     
     /// Get user followers
     /// - Parameters:
@@ -55,4 +61,65 @@ public protocol ALServices: Helpers {
     ///   - token: Bearer of the authenticated user
     /// - Returns: GraphQL discardable result
     func toggleFollow(of user: Int, token: String) async -> GraphQLResponse<AniListToggleResponse>?
+    
+    /// Get all activities of the user
+    /// - Parameters:
+    ///   - user: Current user
+    ///   - token: Bearer of the authenticated user
+    /// - Returns: Activities results Array
+    func getActivities(of user: Int, token: String?) async -> [ActivityUnion]?
+    
+    /// Get a specific activity by Id
+    /// - Parameters:
+    ///   - id: Activity Id
+    ///   - token: Bearer of the authenticated user
+    /// - Returns: Acitvity
+    func getActivity(id: Int, token: String?) async -> ActivityUnion?
+    
+    /// Create an user activity reply
+    /// - Parameters:
+    ///   - activiyId: Related activity Id
+    ///   - text: Reply text
+    ///   - token: Bearer of the authenticated user
+    /// - Returns: GraphQL discardable result
+    func createReply(activiyId: Int, text: String, token: String) async -> AniListSaveReplyResponse?
+    
+    /// Update an user activity reply
+    /// - Parameters:
+    ///   - id: Reply Id
+    ///   - text: Reply text
+    ///   - token: Bearer of the authenticated user
+    /// - Returns: GraphQL discardable result
+    func updateReply(id: Int, text: String, token: String) async -> AniListSaveReplyResponse?
+    
+    /// Delete an user activity reply
+    /// - Parameters:
+    ///   - id: Reply Id
+    ///   - token: Bearer of the authenticated user
+    /// - Returns: GraphQL discardable result
+    func deleteReply(id: Int, token: String) async -> AniListDeleteReplyResponse?
+    
+    
+    /// Delete an user activity 
+    /// - Parameters:
+    ///   - id: Activity Id
+    ///   - token: Bearer of the authenticated user
+    /// - Returns: GraphQL discardable result
+    func deleteActivity(with id: Int, token: String) async -> GraphQLResponse<AniListDeleteActivityResponse>?
+    
+    /// Toggle like of a likeable type
+    /// - Parameters:
+    ///   - id: Likeable object
+    ///   - type: Likeable object type
+    ///   - token: Bearer of the authenticated user
+    /// - Returns: GraphQL discardable result
+    func toggleLike(of id: Int, as type: LikeableType, token: String) async -> GraphQLResponse<AniListLikeResponse>?
+    
+    /// Toggle activity subscription
+    /// - Parameters:
+    ///   - id: Activity Id
+    ///   - subscribe: un/subscribe
+    ///   - token: Bearer of the authenticated user
+    /// - Returns: GraphQL discardable result
+    func toggleSubscription(id: Int, subscribe: Bool, token: String) async -> GraphQLResponse<AniListToggleSubResponse>?
 }

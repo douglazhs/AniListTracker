@@ -12,9 +12,9 @@ public enum Queries {
     /// Authenticated queries
     case viewer
     /// Normal query
-    case search, followers(Int), following(Int), media(Int)
+    case search, user(Int), followers(Int), following(Int), media(Int), activities(Int), activity(Int)
     /// Mutable queries
-    case update, toggleFollow(Int)
+    case update, toggleFollow(Int), updateReply, deleteReply(Int), deleteActivity(Int), createReply, toggleLike, toggleSubscribe
     
     var body: String {
         switch self {
@@ -73,6 +73,47 @@ public enum Queries {
                 }
             }
             """
+        case .user(let id):
+           return """
+            query($id: Int = \(id)) {
+                User(id: $id) {
+                    id
+                    name
+                    about
+                    avatar {
+                        large
+                    }
+                    bannerImage
+                    mediaListOptions {
+                        scoreFormat
+                        animeList {
+                            sectionOrder
+                            customLists
+                        }
+                        mangaList {
+                            sectionOrder
+                            customLists
+                        }
+                    }
+                    statistics {
+                        manga {
+                            count
+                            chaptersRead
+                            volumesRead
+                            genres(limit: 8) {
+                                chaptersRead
+                                genre
+                            }
+                            startYears {
+                                chaptersRead
+                                startYear
+                            }
+                        }
+                    }
+                    siteUrl
+                }
+            }
+            """
         case .followers(let userId):
             return """
             query($userID: Int = \(userId)) {
@@ -80,9 +121,11 @@ public enum Queries {
                     followers(userId: $userID) {
                         id
                         name
+                        about
                         avatar {
                             large
                         }
+                        bannerImage
                         isFollowing
                         isFollower
                         statistics {
@@ -91,7 +134,7 @@ public enum Queries {
                                 meanScore
                                 chaptersRead
                                 volumesRead
-                                genres {
+                                genres(limit: 8) {
                                     chaptersRead
                                     genre
                                 }
@@ -113,9 +156,11 @@ public enum Queries {
                     following(userId: $userID) {
                         id
                         name
+                        about
                         avatar {
                             large
                         }
+                        bannerImage
                         isFollowing
                         isFollower
                         statistics {
@@ -124,7 +169,7 @@ public enum Queries {
                                 meanScore
                                 chaptersRead
                                 volumesRead
-                                genres {
+                                genres(limit: 8) {
                                     chaptersRead
                                     genre
                                 }
@@ -149,7 +194,7 @@ public enum Queries {
                         english
                     }
                     format
-                    status
+                    status(version: 2)
                     description(asHtml: false)
                     startDate {
                         year
@@ -249,6 +294,163 @@ public enum Queries {
             mutation($userId: Int = \(userId)) {
                 ToggleFollow(userId: $userId) {
                     id
+                }
+            }
+            """
+        case .activities(let userId):
+            return """
+            query($userId: Int = \(userId)) {
+                Page {
+                    activities(userId: $userId, type: MANGA_LIST, sort: [ID_DESC]) {
+                        ... on ListActivity {
+                            id
+                            status
+                            progress
+                            isSubscribed
+                            likeCount
+                            isLiked
+                            siteUrl
+                            createdAt
+                            media {
+                                coverImage {
+                                    extraLarge
+                                }
+                                title {
+                                    romaji
+                                    english
+                                }
+                            }
+                            replies {
+                                id
+                                text
+                                likeCount
+                                isLiked
+                                createdAt
+                                user {
+                                    id
+                                    name
+                                    avatar {
+                                        large
+                                    }
+                                }
+                                likes {
+                                    id
+                                    name
+                                    avatar {
+                                        large
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            """
+        case .activity(let id):
+            return """
+            query ($id: Int = \(id)) {
+                Activity(id: $id) {
+                    ... on ListActivity {
+                        id
+                        status
+                        progress
+                        isSubscribed
+                        likeCount
+                        isLiked
+                        siteUrl
+                        createdAt
+                        media {
+                            coverImage {
+                            extraLarge
+                            }
+                            title {
+                            romaji
+                            english
+                            }
+                        }
+                        replies {
+                            id
+                            text
+                            likeCount
+                            isLiked
+                            createdAt
+                            user {
+                                id
+                                name
+                                avatar {
+                                    large
+                                }
+                            }
+                            likes {
+                                id
+                                name
+                                avatar {
+                                    large
+                                }
+                            }
+                        }
+                        likes {
+                            id
+                            name
+                            avatar {
+                                large
+                            }
+                        }
+                    }
+                }
+            }
+            """
+        case .updateReply:
+            return """
+            mutation($id: Int, $text: String) {
+                SaveActivityReply(id: $id, text: $text) {
+                    id
+                }
+            }
+            """
+        case .deleteReply(let id):
+            return """
+            mutation($id: Int = \(id)) {
+                DeleteActivityReply(id: $id) {
+                    ... on Deleted {
+                        deleted
+                    }
+                }
+            }
+            """
+        case .deleteActivity(let id):
+            return """
+            mutation($id: Int = \(id)) {
+                DeleteActivity(id: $id) {
+                    deleted
+                }
+            }
+            """
+        case .createReply:
+            return """
+            mutation($activityId: Int, $text: String) {
+                SaveActivityReply(activityId: $activityId, text: $text) {
+                    id
+                }
+            }
+            """
+        case .toggleLike:
+            return """
+            mutation($id: Int, $type: LikeableType) {
+                ToggleLikeV2(id: $id, type: $type) {
+                    ... on ListActivity {
+                        id
+                    }
+                }
+            }
+            """
+        case .toggleSubscribe:
+            return """
+            mutation($activityId: Int, $subscribe: Boolean) {
+                ToggleActivitySubscription(activityId: $activityId, subscribe: $subscribe) {
+                    ... on ListActivity {
+                        id
+                    }
                 }
             }
             """
