@@ -9,8 +9,8 @@ import Foundation
 
 // ALServices+Search
 public extension ALServices {
-    func search(manga search: String, token: String? = nil) async -> [Media]? {
-        let response: GraphQLResponse<AniListPageResponse>? = await request(
+    func search(manga search: String, token: String? = nil) async throws -> [Media]? {
+        let response: GraphQLResponse<AniListPageResponse>? = try await request(
             GraphQLVariableQuery(
                 query: Queries.search.body,
                 variables: ALSearchVars(search: search)

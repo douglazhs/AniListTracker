@@ -10,8 +10,8 @@ import Foundation
 // ALServices+GetMedia
 public extension ALServices {
     @discardableResult
-    func update(media id: Int, token: String) async -> GraphQLResponse<AniListUpdateResponse>? {
-        let response: GraphQLResponse<AniListUpdateResponse>? =  await request(
+    func update(media id: Int, token: String) async throws -> GraphQLResponse<AniListUpdateResponse>? {
+        let response: GraphQLResponse<AniListUpdateResponse>? =  try await request(
             GraphQLVariableQuery(
                 query: Queries.update.body,
                 variables: ALUpdateVars(
@@ -24,8 +24,8 @@ public extension ALServices {
         return response
     }
     
-    func get(media id: Int, token: String? = nil) async -> Media? {
-        let response: GraphQLResponse<AniListMediaResponse>? = await request(
+    func get(media id: Int, token: String? = nil) async throws -> Media? {
+        let response: GraphQLResponse<AniListMediaResponse>? = try await request(
             GraphQLQuery(query: Queries.media(id).body),
             token: token
         )

@@ -9,8 +9,8 @@ import Foundation
 
 public extension ALServices {
     @discardableResult
-    func toggleFollow(of user: Int, token: String) async -> GraphQLResponse<AniListToggleResponse>? {
-        let response: GraphQLResponse<AniListToggleResponse>? = await request(
+    func toggleFollow(of user: Int, token: String) async throws -> GraphQLResponse<AniListToggleResponse>? {
+        let response: GraphQLResponse<AniListToggleResponse>? = try await request(
             GraphQLQuery(
                 query: Queries.toggleFollow(user).body
             ),
@@ -20,8 +20,8 @@ public extension ALServices {
     }
     
     @discardableResult
-    func toggleLike(of id: Int, as type: LikeableType, token: String) async -> GraphQLResponse<AniListLikeResponse>? {
-        let response: GraphQLResponse<AniListLikeResponse>? = await request(
+    func toggleLike(of id: Int, as type: LikeableType, token: String) async throws -> GraphQLResponse<AniListLikeResponse>? {
+        let response: GraphQLResponse<AniListLikeResponse>? = try await request(
             GraphQLVariableQuery(
                 query: Queries.toggleLike.body,
                 variables: ALToggleLikeVars(

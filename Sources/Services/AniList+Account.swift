@@ -10,7 +10,7 @@ import AuthenticationServices
 
 /// AniList+Account
 public extension AniList {
-    func logIn(response: @escaping (Result) -> Void) {
+    func logIn(response: @escaping (LoginResult) -> Void) {
         let signInPromise = Future<URL, Error> { completion in
             do {
                 let apiData = try ApiSetup.load()

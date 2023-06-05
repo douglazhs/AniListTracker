@@ -13,5 +13,5 @@ public class AniList: NSObject, ALServices {
 }
 
 public extension ALServices {
-    func logIn(response: @escaping (Result) -> Void) { }
+    func logIn(response: @escaping (LoginResult) -> Void) { }
 }

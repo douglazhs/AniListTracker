@@ -9,8 +9,8 @@ import Foundation
 
 public extension ALServices {
     @discardableResult
-    func createReply(activiyId: Int, text: String, token: String) async -> AniListSaveReplyResponse? {
-        let response: GraphQLResponse<AniListSaveReplyResponse>? = await request(
+    func createReply(activiyId: Int, text: String, token: String) async throws -> AniListSaveReplyResponse? {
+        let response: GraphQLResponse<AniListSaveReplyResponse>? = try await request(
             GraphQLVariableQuery(
                 query: Queries.createReply.body,
                 variables: ALCreateReplyVars(
@@ -24,8 +24,8 @@ public extension ALServices {
     }
     
     @discardableResult
-    func updateReply(id: Int, text: String, token: String) async -> AniListSaveReplyResponse? {
-        let response: GraphQLResponse<AniListSaveReplyResponse>? = await request(
+    func updateReply(id: Int, text: String, token: String) async throws -> AniListSaveReplyResponse? {
+        let response: GraphQLResponse<AniListSaveReplyResponse>? = try await request(
             GraphQLVariableQuery(
                 query: Queries.updateReply.body,
                 variables: ALUpdateReplyVars(
@@ -39,8 +39,8 @@ public extension ALServices {
     }
     
     @discardableResult
-    func deleteReply(id: Int, token: String) async -> AniListDeleteReplyResponse? {
-        let response: GraphQLResponse<AniListDeleteReplyResponse>? = await request(
+    func deleteReply(id: Int, token: String) async throws -> AniListDeleteReplyResponse? {
+        let response: GraphQLResponse<AniListDeleteReplyResponse>? = try await request(
             GraphQLQuery(query: Queries.deleteReply(id).body),
             token: token
         )

@@ -23,5 +23,5 @@ public protocol Helpers {
     /// Build authenticated request
     /// - Parameter data: Query data
     /// - Returns: Request object
-    func request<T: Codable, D: Encodable>(_ data: D, token: String?) async -> T?
+    func request<T: Codable, D: Encodable>(_ data: D, token: String?) async throws -> T?
 }

@@ -9,8 +9,8 @@ import Foundation
 
 /// ALServices+User
 public extension ALServices {
-    func getAuthUser(token: String) async -> User? {
-        let userResponse: GraphQLResponse<AniListViewerResponse>? = await request(
+    func getAuthUser(token: String) async throws -> User? {
+        let userResponse: GraphQLResponse<AniListViewerResponse>? = try await request(
             GraphQLQuery(query: Queries.viewer.body),
             token: token
         )
@@ -20,8 +20,8 @@ public extension ALServices {
         return viewer
     }
     
-    func getUser(by id: Int, token: String) async -> User? {
-        let userResponse: GraphQLResponse<AniListUserResponse>? = await request(
+    func getUser(by id: Int, token: String) async throws -> User? {
+        let userResponse: GraphQLResponse<AniListUserResponse>? = try await request(
             GraphQLQuery(query: Queries.user(id).body),
             token: token
         )
@@ -31,16 +31,16 @@ public extension ALServices {
         return user
     }
         
-    func getFollowers(of userId: Int, token: String? = nil) async -> [User]? {
-        let followersResponse: GraphQLResponse<AniListPageResponse>? = await request(
+    func getFollowers(of userId: Int, token: String? = nil) async throws -> [User]? {
+        let followersResponse: GraphQLResponse<AniListPageResponse>? = try await request(
             GraphQLQuery(query: Queries.followers(userId).body),
             token: token
         )
         return followersResponse?.data.Page?.followers
     }
     
-    func getFollowing(of userId: Int, token: String? = nil) async -> [User]? {
-        let followingResponse: GraphQLResponse<AniListPageResponse>? = await request(
+    func getFollowing(of userId: Int, token: String? = nil) async throws -> [User]? {
+        let followingResponse: GraphQLResponse<AniListPageResponse>? = try await request(
             GraphQLQuery(query: Queries.following(userId).body),
             token: token
         )

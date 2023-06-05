@@ -37,7 +37,6 @@ public class ApiSetup: Codable {
             let object = try JSONDecoder().decode(ApiSetup.self, from: data)
             return object
         } catch {
-            dump(error.localizedDescription.debugDescription)
             throw BundleError.fileDecodingFailed(name: "anilist_api", error)
         }
     }
