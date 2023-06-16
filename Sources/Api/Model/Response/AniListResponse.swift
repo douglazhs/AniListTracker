@@ -62,7 +62,7 @@ public struct AniListMediaResponse: Codable {
     var Media: Media?
 }
 
-/// Response of GraphQL request for like toggle
+/// Response of GraphQL request for activity like toggle
 public struct AniListLikeResponse: Codable {
     var ToggleLikeV2: LikeableUnion?
 }

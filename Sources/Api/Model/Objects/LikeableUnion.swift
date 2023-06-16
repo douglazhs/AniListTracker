@@ -9,5 +9,5 @@ import Foundation
 
 /// Likeable object
 public struct LikeableUnion: Codable {
-    public var id: Int
+    public var id: Int?
 }

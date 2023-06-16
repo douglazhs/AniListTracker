@@ -98,6 +98,7 @@ public enum Queries {
                     statistics {
                         manga {
                             count
+                            meanScore
                             chaptersRead
                             volumesRead
                             genres(limit: 8) {
@@ -438,7 +439,7 @@ public enum Queries {
             return """
             mutation($id: Int, $type: LikeableType) {
                 ToggleLikeV2(id: $id, type: $type) {
-                    ... on ListActivity {
+                    ... on ActivityReply {
                         id
                     }
                 }
