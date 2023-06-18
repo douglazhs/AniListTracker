@@ -10,6 +10,7 @@ import Foundation
 /// User activity
 public struct ActivityUnion: Identifiable, Codable {
     public var id: Int
+    public var userId: Int
     public var status: String?
     public var progress: String?
     public var isSubscribed: Bool?

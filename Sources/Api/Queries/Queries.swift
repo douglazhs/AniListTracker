@@ -305,6 +305,7 @@ public enum Queries {
                     activities(userId: $userId, type: MANGA_LIST, sort: [ID_DESC]) {
                         ... on ListActivity {
                             id
+                            userId
                             status
                             progress
                             isSubscribed
@@ -342,6 +343,13 @@ public enum Queries {
                                     }
                                 }
                             }
+                            likes {
+                                id
+                                name
+                                avatar {
+                                    large
+                                }
+                            }
                         }
                     }
                 }
@@ -353,6 +361,7 @@ public enum Queries {
                 Activity(id: $id) {
                     ... on ListActivity {
                         id
+                        userId
                         status
                         progress
                         isSubscribed
