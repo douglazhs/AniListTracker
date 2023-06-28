@@ -8,7 +8,11 @@
 import Foundation
 
 /// Activity reply
-public struct ActivityReply: Identifiable, Codable {
+public struct ActivityReply: Identifiable, Equatable, Codable {
+    public static func == (lhs: ActivityReply, rhs: ActivityReply) -> Bool {
+        return lhs.id == rhs.id
+    }
+    
     public var id: Int
     public var text: String?
     public var likeCount: Int?

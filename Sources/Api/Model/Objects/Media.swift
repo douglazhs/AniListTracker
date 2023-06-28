@@ -10,6 +10,7 @@ import Foundation
 /// Short Manga result
 public struct ShortMedia: Codable {
     public var coverImage: MediaCoverImage?
+    public var bannerImage: String?
     public var title: MediaTitle?
 }
 
@@ -51,6 +52,9 @@ public struct FuzzyDate: Codable {
 
 public struct MediaCoverImage: Codable {
     public var extraLarge: String?
+    public var large: String?
+    public var medium: String?
+    public var color: String?
 }
 
 public struct MediaList: Codable {

@@ -7,14 +7,22 @@
 
 import Foundation
 
-public struct ShortUser: Identifiable, Codable {
+public struct ShortUser: Identifiable, Codable, Equatable {
+    public static func == (lhs: ShortUser, rhs: ShortUser) -> Bool {
+        return lhs.id == rhs.id
+    }
+    
     public var id: Int
     public var name: String?
     public var avatar: UserAvatar?
 }
 
 /// AniList User
-public struct User: Identifiable, Codable {
+public struct User: Identifiable, Codable, Equatable {
+    public static func == (lhs: User, rhs: User) -> Bool {
+        lhs.id == rhs.id
+    }
+    
     public var id: Int
     public var name: String
     public var about: String?
@@ -29,6 +37,7 @@ public struct User: Identifiable, Codable {
 
 public struct UserAvatar: Codable {
     public var large: String?
+    public var medium: String?
 }
 
 public struct MediaListOptions: Codable {

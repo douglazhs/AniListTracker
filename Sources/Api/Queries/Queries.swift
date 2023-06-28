@@ -27,6 +27,7 @@ public enum Queries {
                     about
                     avatar {
                         large
+                        medium
                     }
                     bannerImage
                     mediaListOptions {
@@ -82,6 +83,7 @@ public enum Queries {
                     about
                     avatar {
                         large
+                        medium
                     }
                     bannerImage
                     mediaListOptions {
@@ -125,6 +127,7 @@ public enum Queries {
                         about
                         avatar {
                             large
+                            medium
                         }
                         bannerImage
                         isFollowing
@@ -160,6 +163,7 @@ public enum Queries {
                         about
                         avatar {
                             large
+                            medium
                         }
                         bannerImage
                         isFollowing
@@ -213,6 +217,9 @@ public enum Queries {
                     source
                     coverImage {
                         extraLarge
+                        large
+                        medium
+                        color
                     }
                     bannerImage
                     genres
@@ -316,7 +323,11 @@ public enum Queries {
                             media {
                                 coverImage {
                                     extraLarge
+                                    large
+                                    medium
+                                    color
                                 }
+                                bannerImage
                                 title {
                                     romaji
                                     english
@@ -333,6 +344,7 @@ public enum Queries {
                                     name
                                     avatar {
                                         large
+                                        medium
                                     }
                                 }
                                 likes {
@@ -340,6 +352,7 @@ public enum Queries {
                                     name
                                     avatar {
                                         large
+                                        medium
                                     }
                                 }
                             }
@@ -348,6 +361,7 @@ public enum Queries {
                                 name
                                 avatar {
                                     large
+                                    medium
                                 }
                             }
                         }
@@ -371,11 +385,15 @@ public enum Queries {
                         createdAt
                         media {
                             coverImage {
-                            extraLarge
+                                extraLarge
+                                large
+                                medium
+                                color
                             }
+                            bannerImage
                             title {
-                            romaji
-                            english
+                                romaji
+                                english
                             }
                         }
                         replies {
@@ -389,6 +407,7 @@ public enum Queries {
                                 name
                                 avatar {
                                     large
+                                    medium
                                 }
                             }
                             likes {
@@ -396,6 +415,7 @@ public enum Queries {
                                 name
                                 avatar {
                                     large
+                                    medium
                                 }
                             }
                         }
@@ -404,6 +424,7 @@ public enum Queries {
                             name
                             avatar {
                                 large
+                                medium
                             }
                         }
                     }

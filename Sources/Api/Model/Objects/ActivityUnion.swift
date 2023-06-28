@@ -8,7 +8,11 @@
 import Foundation
 
 /// User activity
-public struct ActivityUnion: Identifiable, Codable {
+public struct ActivityUnion: Identifiable, Codable, Equatable {
+    public static func == (lhs: ActivityUnion, rhs: ActivityUnion) -> Bool {
+        lhs.id == rhs.id
+    }
+    
     public var id: Int
     public var userId: Int
     public var status: String?
