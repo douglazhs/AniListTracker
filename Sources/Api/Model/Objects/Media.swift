@@ -15,7 +15,11 @@ public struct ShortMedia: Codable {
 }
 
 /// Manga
-public struct Media: Codable {
+public struct Media: Identifiable, Equatable, Codable {
+    public static func == (lhs: Media, rhs: Media) -> Bool {
+        lhs.id == rhs.id
+    }
+    
     public var id: Int
     public var title: MediaTitle?
     public var format: String?
@@ -60,6 +64,6 @@ public struct MediaCoverImage: Codable {
 public struct MediaList: Codable {
     public var userId: Int?
     public var status: String?
+    public var score: CGFloat?
     public var progress: Int?
-    public var progressVolumes: Int?
 }

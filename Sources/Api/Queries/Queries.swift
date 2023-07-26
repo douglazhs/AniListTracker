@@ -55,21 +55,98 @@ public enum Queries {
             """
         case .search:
             return """
-            query($search: String) {
+            query($search: String, $format: MediaFormat = MANGA) {
                 Page {
-                    media(search: $search, type: MANGA) {
+                    media(search: $search, format: $format) {
                         id
                         title {
                             romaji
                             english
                         }
+                        format
+                        status(version: 2)
+                        description(asHtml: false)
+                        startDate {
+                            year
+                            month
+                            day
+                        }
+                        endDate {
+                            year
+                            month
+                            day
+                        }
                         chapters
                         volumes
+                        countryOfOrigin
                         source
-                        format
-                        mediaListEntry {
-                            status
+                        coverImage {
+                            extraLarge
+                            large
+                            medium
+                            color
                         }
+                        bannerImage
+                        genres
+                        averageScore
+                        popularity
+                        favourites
+                        characters {
+                            edges {
+                                node {
+                                    id
+                                    name {
+                                        full
+                                    }
+                                    image {
+                                        large
+                                    }
+                                    description
+                                }
+                                id
+                                role
+                            }
+                        }
+                        staff {
+                            edges {
+                                id
+                                role
+                                node {
+                                    id
+                                    name {
+                                        full
+                                        native
+                                    }
+                                    languageV2
+                                    image {
+                                        large
+                                    }
+                                    description
+                                    primaryOccupations
+                                    gender
+                                    dateOfBirth {
+                                        year
+                                        month
+                                        day
+                                    }
+                                    dateOfDeath {
+                                        year
+                                        month
+                                        day
+                                    }
+                                    age
+                                    yearsActive
+                                    homeTown
+                                }
+                            }
+                        }
+                        mediaListEntry {
+                            userId
+                            status
+                            score
+                            progress
+                        }
+                        isAdult
                     }
                 }
             }
@@ -278,6 +355,10 @@ public enum Queries {
                     mediaListEntry {
                         userId
                         status
+                        score
+                        progress
+                        startedAt
+                        completedAt
                     }
                     isAdult
                 }
@@ -294,6 +375,11 @@ public enum Queries {
                     status: $status
                 ) {
                     id
+                    status
+                    score
+                    progress
+                    startedAt
+                    completedAt
                 }
             }
             """
