@@ -79,7 +79,7 @@ public enum Queries {
                         chapters
                         volumes
                         countryOfOrigin
-                        source
+                        source(version: 3)
                         coverImage {
                             extraLarge
                             large
@@ -140,11 +140,31 @@ public enum Queries {
                                 }
                             }
                         }
+                        rankings {
+                            id
+                            rank
+                            type
+                            format
+                            allTime
+                            context
+                        }
                         mediaListEntry {
                             userId
                             status
                             score
                             progress
+                            progressVolumes
+                            updatedAt
+                            startedAt {
+                                year
+                                month
+                                day
+                            }
+                            startedAt {
+                                year
+                                month
+                                day
+                            }
                         }
                         isAdult
                     }
@@ -291,7 +311,7 @@ public enum Queries {
                     chapters
                     volumes
                     countryOfOrigin
-                    source
+                    source(version: 3)
                     coverImage {
                         extraLarge
                         large
@@ -352,13 +372,31 @@ public enum Queries {
                             }
                         }
                     }
+                    rankings {
+                        id
+                        rank
+                        type
+                        format
+                        allTime
+                        context
+                    }
                     mediaListEntry {
                         userId
                         status
                         score
                         progress
-                        startedAt
-                        completedAt
+                        progressVolumes
+                        updatedAt
+                        startedAt {
+                            year
+                            month
+                            day
+                        }
+                        completedAt {
+                            year
+                            month
+                            day
+                        }
                     }
                     isAdult
                 }

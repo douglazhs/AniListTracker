@@ -39,6 +39,7 @@ public struct Media: Identifiable, Equatable, Codable {
     public var favourites: Int?
     public var characters: CharacterConnection?
     public var staff: StaffConnection?
+    public var rankings: [MediaRank]?
     public var mediaListEntry: MediaList?
     public var isAdult: Bool?
 }
@@ -66,4 +67,17 @@ public struct MediaList: Codable {
     public var status: String?
     public var score: CGFloat?
     public var progress: Int?
+    public var progressVolumes: Int?
+    public var updatedAt: Int?
+    public var startedAt: FuzzyDate?
+    public var completedAt: FuzzyDate?
+}
+
+public struct MediaRank: Codable {
+    public var id: Int
+    public var rank: Int?
+    public var type: String?
+    public var format: String?
+    public var allTime: Bool
+    public var context: String?
 }
