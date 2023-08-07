@@ -167,6 +167,7 @@ public enum Queries {
                             }
                         }
                         isAdult
+                        siteUrl
                     }
                 }
             }
@@ -399,6 +400,7 @@ public enum Queries {
                         }
                     }
                     isAdult
+                    siteUrl
                 }
             }
             """

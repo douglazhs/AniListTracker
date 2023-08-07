@@ -42,6 +42,7 @@ public struct Media: Identifiable, Equatable, Codable {
     public var rankings: [MediaRank]?
     public var mediaListEntry: MediaList?
     public var isAdult: Bool?
+    public var siteUrl: String?
 }
 
 public struct MediaTitle: Codable {
