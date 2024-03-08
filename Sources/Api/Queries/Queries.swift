@@ -33,19 +33,47 @@ public enum Queries {
                     mediaListOptions {
                         scoreFormat
                     }
+                   favourites {
+                       manga(perPage: 10) {
+                           nodes {
+                                id
+                           }
+                       }
+                   }
                     statistics {
                         manga {
                             count
                             meanScore
                             chaptersRead
                             volumesRead
-                            genres(limit: 8) {
+                            statuses {
+                                count
+                                chaptersRead
+                                status
+                            }
+                            genres(limit: 10) {
+                                count
                                 chaptersRead
                                 genre
                             }
+                            tags(limit: 10) {
+                                count
+                                chaptersRead
+                                tag {
+                                    id
+                                    name
+                                }
+                            }
                             startYears {
+                                count
                                 chaptersRead
                                 startYear
+                            }
+                            countries {
+                                count
+                                chaptersRead
+                                mediaIds
+                                country
                             }
                         }
                     }
