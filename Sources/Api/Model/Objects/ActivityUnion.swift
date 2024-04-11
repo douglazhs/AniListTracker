@@ -22,6 +22,7 @@ public struct ActivityUnion: Identifiable, Codable, Equatable {
     public var isLiked: Bool?
     public var siteUrl: String?
     public var createdAt: Int?
+    public var user: ShortUser?
     public var media: ShortMedia?
     public var replies: [ActivityReply]?
     public var likes: [ShortUser]?

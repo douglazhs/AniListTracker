@@ -67,7 +67,7 @@ public protocol ALServices: Helpers {
     ///   - user: Current user
     ///   - token: Bearer of the authenticated user
     /// - Returns: Activities results Array
-    func getActivities(of user: Int, token: String?) async throws -> [ActivityUnion]?
+    func getActivities(of user: Int?, token: String?, page: Int) async throws -> [ActivityUnion]?
     
     /// Get a specific activity by Id
     /// - Parameters:

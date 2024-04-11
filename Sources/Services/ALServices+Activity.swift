@@ -8,9 +8,12 @@
 import Foundation
 
 public extension ALServices {
-    func getActivities(of user: Int, token: String? = nil) async throws -> [ActivityUnion]? {
+    func getActivities(of user: Int? = nil, token: String? = nil, page: Int) async throws -> [ActivityUnion]? {
+        var query = Queries.activities(page)
+        if let user { query = Queries.userActivities(user, page) }
+        
         let activitiesRespone: GraphQLResponse<AniListPageResponse>? = try await request(
-            GraphQLQuery(query: Queries.activities(user).body),
+            GraphQLQuery(query: query.body),
             token: token
         )
         return activitiesRespone?.data.Page?.activities

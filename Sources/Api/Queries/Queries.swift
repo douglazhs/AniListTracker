@@ -12,7 +12,7 @@ public enum Queries {
     /// Authenticated queries
     case viewer
     /// Normal query
-    case search, user(Int), followers(Int), following(Int), media(Int), activities(Int), activity(Int)
+    case search, user(Int), followers(Int), following(Int), media(Int), activities(Int), userActivities(Int, Int), activity(Int)
     /// Mutable queries
     case update, toggleFollow(Int), updateReply, deleteReply(Int), deleteActivity(Int), createReply, toggleLike, toggleSubscribe
     
@@ -459,10 +459,82 @@ public enum Queries {
                 }
             }
             """
-        case .activities(let userId):
+        case .activities(let page):
             return """
-            query($userId: Int = \(userId)) {
-                Page {
+            query($isFollowing: Boolean = true, $hasReplies: Boolean = false, $activityType: ActivityType, $page: Int = \(page)) {
+                Page(page: $page, perPage: 25) {
+                    activities(isFollowing: $isFollowing, type: $activityType, hasRepliesOrTypeText: $hasReplies, type_in: [MANGA_LIST], sort: ID_DESC) {
+                        ... on ListActivity {
+                            id
+                            userId
+                            status
+                            progress
+                            isSubscribed
+                            likeCount
+                            isLiked
+                            siteUrl
+                            createdAt
+                            user {
+                                id
+                                name
+                                avatar {
+                                    large
+                                    medium
+                                }
+                            }
+                            media {
+                                coverImage {
+                                    extraLarge
+                                    large
+                                    medium
+                                    color
+                                }
+                                bannerImage
+                                title {
+                                    romaji
+                                    english
+                                }
+                            }
+                            replies {
+                                id
+                                text
+                                likeCount
+                                isLiked
+                                createdAt
+                                user {
+                                    id
+                                    name
+                                    avatar {
+                                        large
+                                        medium
+                                    }
+                                }
+                                likes {
+                                    id
+                                    name
+                                    avatar {
+                                        large
+                                        medium
+                                    }
+                                }
+                            }
+                            likes {
+                                id
+                                name
+                                avatar {
+                                    large
+                                    medium
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            """
+        case .userActivities(let userId, let page):
+            return """
+            query($userId: Int = \(userId), $page: Int = \(page)) {
+                Page(page: $page, perPage: 25) {
                     activities(userId: $userId, type: MANGA_LIST, sort: [ID_DESC]) {
                         ... on ListActivity {
                             id
@@ -474,6 +546,14 @@ public enum Queries {
                             isLiked
                             siteUrl
                             createdAt
+                            user {
+                                id
+                                name
+                                avatar {
+                                    large
+                                    medium
+                                }
+                            }
                             media {
                                 coverImage {
                                     extraLarge
