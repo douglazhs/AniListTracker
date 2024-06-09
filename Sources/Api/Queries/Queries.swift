@@ -34,9 +34,23 @@ public enum Queries {
                         scoreFormat
                     }
                    favourites {
-                       manga(perPage: 10) {
+                       manga(perPage: 25) {
                            nodes {
                                 id
+                                title {
+                                    romaji
+                                    english
+                                }
+                                coverImage {
+                                    medium
+                                    large
+                                    extraLarge
+                                }
+                                bannerImage
+                                mediaListEntry {
+                                    userId
+                                    status
+                                }
                            }
                        }
                    }
