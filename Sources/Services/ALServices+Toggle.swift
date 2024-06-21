@@ -33,4 +33,46 @@ public extension ALServices {
         )
         return response
     }
+    
+    @discardableResult
+    func toggleFavoriteManga(id: Int, token: String) async throws -> GraphQLResponse<AniListToggleMangaResponse>? {
+        let response: GraphQLResponse<AniListToggleMangaResponse>? = try await request(
+            GraphQLVariableQuery(
+                query: Queries.toggleLike.body,
+                variables: ALToggleFavoriteVars(
+                    characterId: id
+                )
+            ),
+            token: token
+        )
+        return response
+    }
+    
+    @discardableResult
+    func toggleFavoriteCharacter(id: Int, token: String) async throws -> GraphQLResponse<AniListToggleCharacterResponse>? {
+        let response: GraphQLResponse<AniListToggleCharacterResponse>? = try await request(
+            GraphQLVariableQuery(
+                query: Queries.toggleLike.body,
+                variables: ALToggleFavoriteVars(
+                    characterId: id
+                )
+            ),
+            token: token
+        )
+        return response
+    }
+    
+    @discardableResult
+    func toggleFavoriteStaff(id: Int, token: String) async throws -> GraphQLResponse<AniListToggleStaffResponse>? {
+        let response: GraphQLResponse<AniListToggleStaffResponse>? = try await request(
+            GraphQLVariableQuery(
+                query: Queries.toggleLike.body,
+                variables: ALToggleFavoriteVars(
+                    characterId: id
+                )
+            ),
+            token: token
+        )
+        return response
+    }
 }

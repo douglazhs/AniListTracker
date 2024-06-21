@@ -52,3 +52,7 @@ public struct ALToggleSubVars: Codable {
     var activityId: Int
     var subscribe: Bool
 }
+
+public struct ALToggleFavoriteVars: Codable {
+    var characterId: Int
+}

@@ -7,28 +7,37 @@
 
 import Foundation
 
-/// Manga Character
-public struct CharacterConnection: Codable {
-    var edges: [CharacterEdge]?
-}
-
-public struct CharacterEdge: Codable {
-    var node: Character
-    var id: Int
-    var role: String?
-}
-
-public struct Character: Codable {
-    var id: Int
-    var name: CharacterName?
-    var image: CharacterImage?
-    var description: String?
+/// Manga character
+public struct Character: Identifiable, Equatable, Hashable, Codable {
+    public static func == (lhs: Character, rhs: Character) -> Bool {
+        lhs.id == rhs.id
+    }
+    
+    public func hash(into hasher: inout Hasher) { }
+    
+    public var id: Int
+    public var name: CharacterName?
+    public var image: CharacterImage?
+    public var description: String?
+    public var gender: String?
+    public var age: String?
+    public var isFavourite: Bool?
+    public var favourites: Int?
+    public var media: MediaConnection?
 }
 
 public struct CharacterName: Codable {
-    var full: String?
+    public var first: String?
+    public var middle: String?
+    public var last: String?
+    public var full: String?
+    public var native: String?
+    public var alternative: [String]?
+    public var alternativeSpoiler: [String]?
+    public var userPreferred: String?
 }
 
 public struct CharacterImage: Codable {
-    var large: String?
+    public var medium: String?
+    public var large: String?
 }

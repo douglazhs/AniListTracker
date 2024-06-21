@@ -66,3 +66,18 @@ public struct AniListMediaResponse: Codable {
 public struct AniListLikeResponse: Codable {
     var ToggleLikeV2: LikeableUnion?
 }
+
+/// Response of GraphQL request for manga favorite toggle
+public struct AniListToggleMangaResponse: Codable {
+    var data: ToggleManga?
+}
+
+/// Response of GraphQL request for staff favorite toggle
+public struct AniListToggleStaffResponse: Codable {
+    var data: ToggleStaff?
+}
+
+/// Response of GraphQL request for character favorite toggle
+public struct AniListToggleCharacterResponse: Codable {
+    var data: ToggleCharacter?
+}

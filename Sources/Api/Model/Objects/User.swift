@@ -45,13 +45,46 @@ public struct MediaListOptions: Codable {
     public var scoreFormat: String?
 }
 
+// Favories connections -------------------------------
 public struct Favourites: Codable {
     public var manga: MediaConnection?
+    public var characters: CharacterFavConnection?
+    public var staff: StaffFavConnection?
 }
 
 public struct MediaConnection: Codable {
     public var nodes: [Media]?
 }
+
+public struct CharacterFavConnection: Codable {
+    public var nodes: [Character]?
+}
+
+public struct CharacterConnection: Codable {
+    public var edges: [CharacterEdge]?
+    public var nodes: [Character]?
+}
+
+public struct CharacterEdge: Codable {
+    public var node: Character
+    public var id: Int
+    public var role: String?
+}
+
+public struct StaffFavConnection: Codable {
+    public var nodes: [Staff]?
+}
+
+public struct StaffConnection: Codable {
+    public var edges: [StaffEdge]?
+}
+
+public struct StaffEdge: Codable {
+    public var node: Staff?
+    public var id: Int
+    public var role: String?
+}
+//------------------------------------------------------
 
 public struct UserStatisticTypes: Codable {
     public var manga: UserStatistics?

@@ -122,4 +122,25 @@ public protocol ALServices: Helpers {
     ///   - token: Bearer of the authenticated user
     /// - Returns: GraphQL discardable result
     func toggleSubscription(id: Int, subscribe: Bool, token: String) async throws -> GraphQLResponse<AniListToggleSubResponse>?
+    
+    /// Toggle favorite manga
+    /// - Parameters:
+    ///   - id: Manga Id
+    ///   - token: Bearer of the authenticated user
+    /// - Returns: GraphQL discardable result
+    func toggleFavoriteManga(id: Int, token: String) async throws -> GraphQLResponse<AniListToggleMangaResponse>?
+    
+    /// Toggle favorite character
+    /// - Parameters:
+    ///   - id: Character Id
+    ///   - token: Bearer of the authenticated user
+    /// - Returns: GraphQL discardable result
+    func toggleFavoriteCharacter(id: Int, token: String) async throws -> GraphQLResponse<AniListToggleCharacterResponse>?
+    
+    /// Toggle favorite staff
+    /// - Parameters:
+    ///   - id: Staff Id
+    ///   - token: Bearer of the authenticated user
+    /// - Returns: GraphQL discardable result
+    func toggleFavoriteStaff(id: Int, token: String) async throws -> GraphQLResponse<AniListToggleStaffResponse>?
 }

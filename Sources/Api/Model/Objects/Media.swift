@@ -7,15 +7,22 @@
 
 import Foundation
 
+
+public protocol MangaMedia { 
+    var coverImage: MediaCoverImage? { get set }
+    var bannerImage: String? { get set }
+    var title: MediaTitle? { get set }
+}
+
 /// Short Manga result
-public struct ShortMedia: Codable {
+public struct ShortMedia: Codable, MangaMedia {
     public var coverImage: MediaCoverImage?
     public var bannerImage: String?
     public var title: MediaTitle?
 }
 
 /// Manga
-public struct Media: Identifiable, Equatable, Codable {
+public struct Media: Identifiable, Equatable, Codable, MangaMedia {
     public static func == (lhs: Media, rhs: Media) -> Bool {
         lhs.id == rhs.id
     }
@@ -33,6 +40,7 @@ public struct Media: Identifiable, Equatable, Codable {
     public var source: String?
     public var coverImage: MediaCoverImage?
     public var bannerImage: String?
+    public var isLicensed: Bool?
     public var genres: [String]?
     public var averageScore: Int?
     public var popularity: Int?

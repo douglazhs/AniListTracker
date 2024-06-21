@@ -14,7 +14,8 @@ public enum Queries {
     /// Normal query
     case search, user(Int), followers(Int), following(Int), media(Int), activities(Int), userActivities(Int, Int), activity(Int)
     /// Mutable queries
-    case update, toggleFollow(Int), updateReply, deleteReply(Int), deleteActivity(Int), createReply, toggleLike, toggleSubscribe
+    case update, toggleFollow(Int), updateReply, deleteReply(Int), deleteActivity(Int), createReply, toggleLike, toggleSubscribe,
+    toggleFavManga, toggleFavCharacter, toggleFavStaff
     
     var body: String {
         switch self {
@@ -36,24 +37,76 @@ public enum Queries {
                    favourites {
                        manga(perPage: 25) {
                            nodes {
-                                id
-                                title {
-                                    romaji
-                                    english
-                                }
-                                coverImage {
-                                    medium
-                                    large
-                                    extraLarge
-                                }
-                                bannerImage
-                                mediaListEntry {
-                                    userId
-                                    status
-                                }
+                                \(mediaAttributes)
                            }
                        }
-                   }
+                       characters {
+                            nodes {
+                                id
+                                name {
+                                    first
+                                    middle
+                                    last
+                                    full
+                                    native
+                                    alternative
+                                    alternativeSpoiler
+                                    userPreferred
+                                }
+                                image {
+                                    medium
+                                    large
+                                }
+                                description
+                                gender
+                                age
+                                isFavourite
+                                favourites
+                                media(type: MANGA, sort: POPULARITY_DESC) {
+                                    nodes {
+                                        \(mediaAttributes)
+                                    }
+                                }
+                            }
+                        }
+                        staff {
+                            nodes {
+                                id
+                                name {
+                                    first
+                                    last
+                                    full
+                                    native
+                                    alternative
+                                    userPreferred
+                                }
+                                languageV2
+                                image {
+                                    large
+                                    medium
+                                }
+                                description(asHtml: false)
+                                primaryOccupations
+                                gender
+                                dateOfBirth {
+                                    year
+                                    month
+                                    day
+                                }
+                                dateOfDeath {
+                                    year
+                                    month
+                                    day
+                                }
+                                age
+                                yearsActive
+                                homeTown
+                                isFavourite
+                                siteUrl
+                                favourites
+                            }
+                        }
+                    }
                     statistics {
                         manga {
                             count
@@ -100,116 +153,7 @@ public enum Queries {
             query($search: String, $format: MediaFormat = MANGA) {
                 Page {
                     media(search: $search, format: $format) {
-                        id
-                        title {
-                            romaji
-                            english
-                        }
-                        format
-                        status(version: 2)
-                        description(asHtml: false)
-                        startDate {
-                            year
-                            month
-                            day
-                        }
-                        endDate {
-                            year
-                            month
-                            day
-                        }
-                        chapters
-                        volumes
-                        countryOfOrigin
-                        source(version: 3)
-                        coverImage {
-                            extraLarge
-                            large
-                            medium
-                            color
-                        }
-                        bannerImage
-                        genres
-                        averageScore
-                        popularity
-                        favourites
-                        characters {
-                            edges {
-                                node {
-                                    id
-                                    name {
-                                        full
-                                    }
-                                    image {
-                                        large
-                                    }
-                                    description
-                                }
-                                id
-                                role
-                            }
-                        }
-                        staff {
-                            edges {
-                                id
-                                role
-                                node {
-                                    id
-                                    name {
-                                        full
-                                        native
-                                    }
-                                    languageV2
-                                    image {
-                                        large
-                                    }
-                                    description
-                                    primaryOccupations
-                                    gender
-                                    dateOfBirth {
-                                        year
-                                        month
-                                        day
-                                    }
-                                    dateOfDeath {
-                                        year
-                                        month
-                                        day
-                                    }
-                                    age
-                                    yearsActive
-                                    homeTown
-                                }
-                            }
-                        }
-                        rankings {
-                            id
-                            rank
-                            type
-                            format
-                            allTime
-                            context
-                        }
-                        mediaListEntry {
-                            userId
-                            status
-                            score
-                            progress
-                            progressVolumes
-                            updatedAt
-                            startedAt {
-                                year
-                                month
-                                day
-                            }
-                            startedAt {
-                                year
-                                month
-                                day
-                            }
-                        }
-                        isAdult
-                        siteUrl
+                        \(mediaAttributes)
                     }
                 }
             }
@@ -333,116 +277,7 @@ public enum Queries {
             return """
             query ($id: Int = \(id)) {
                 Media(id: $id) {
-                    id
-                    title {
-                        romaji
-                        english
-                    }
-                    format
-                    status(version: 2)
-                    description(asHtml: false)
-                    startDate {
-                        year
-                        month
-                        day
-                    }
-                    endDate {
-                        year
-                        month
-                        day
-                    }
-                    chapters
-                    volumes
-                    countryOfOrigin
-                    source(version: 3)
-                    coverImage {
-                        extraLarge
-                        large
-                        medium
-                        color
-                    }
-                    bannerImage
-                    genres
-                    averageScore
-                    popularity
-                    favourites
-                    characters {
-                        edges {
-                            node {
-                                id
-                                name {
-                                    full
-                                }
-                                image {
-                                    large
-                                }
-                                description
-                            }
-                            id
-                            role
-                        }
-                    }
-                    staff {
-                        edges {
-                            id
-                            role
-                            node {
-                                id
-                                name {
-                                    full
-                                    native
-                                }
-                                languageV2
-                                image {
-                                    large
-                                }
-                                description
-                                primaryOccupations
-                                gender
-                                dateOfBirth {
-                                    year
-                                    month
-                                    day
-                                }
-                                dateOfDeath {
-                                    year
-                                    month
-                                    day
-                                }
-                                age
-                                yearsActive
-                                homeTown
-                            }
-                        }
-                    }
-                    rankings {
-                        id
-                        rank
-                        type
-                        format
-                        allTime
-                        context
-                    }
-                    mediaListEntry {
-                        userId
-                        status
-                        score
-                        progress
-                        progressVolumes
-                        updatedAt
-                        startedAt {
-                            year
-                            month
-                            day
-                        }
-                        completedAt {
-                            year
-                            month
-                            day
-                        }
-                    }
-                    isAdult
-                    siteUrl
+                    \(mediaAttributes)
                 }
             }
             """
@@ -729,6 +564,42 @@ public enum Queries {
                 ToggleActivitySubscription(activityId: $activityId, subscribe: $subscribe) {
                     ... on ListActivity {
                         id
+                    }
+                }
+            }
+            """
+        case .toggleFavManga:
+            return """
+            mutation($mangaId: Int) {
+                ToggleFavourite(mangaId: $mangaId) {
+                    manga {
+                        nodes {
+                            id
+                        }
+                    }
+                }
+            }
+            """
+        case .toggleFavCharacter:
+            return """
+            mutation($characterId: Int) {
+                ToggleFavourite(characterId: $characterId) {
+                    characters {
+                        nodes {
+                            id
+                        }
+                    }
+                }
+            }
+            """
+        case .toggleFavStaff:
+            return """
+            mutation($staffId: Int) {
+                ToggleFavourite(staffId: $staffId) {
+                    staff {
+                        nodes {
+                            id
+                        }
                     }
                 }
             }
