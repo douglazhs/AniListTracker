@@ -93,6 +93,7 @@ public struct UserStatisticTypes: Codable {
 public struct UserStatistics: Codable {
     public var count: Int?
     public var meanScore: Double?
+    public var standardDeviation: Double?
     public var chaptersRead: Int?
     public var volumesRead: Int?
     public var statuses: [UserStatusStatistic]?
@@ -100,6 +101,17 @@ public struct UserStatistics: Codable {
     public var genres: [UserGenreStatistic]?
     public var tags: [UserTagStatistic]?
     public var countries: [UserCountryStatistic]?
+    public var staff: [UserStaffStatistic]?
+}
+
+public struct UserStaffStatistic: Codable {
+    public var chaptersRead: Int?
+    public var staff: StaffStatistic?
+}
+
+public struct StaffStatistic: Codable {
+    public var id: Int
+    public var name: StaffName?
 }
 
 public struct UserStatusStatistic: Codable {

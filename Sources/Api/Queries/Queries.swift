@@ -111,19 +111,35 @@ public enum Queries {
                         manga {
                             count
                             meanScore
+                            standardDeviation
                             chaptersRead
                             volumesRead
+                            staff(limit: 100) {
+                                count
+                                chaptersRead
+                                staff {
+                                    id
+                                    name {
+                                        first
+                                        last
+                                        full
+                                        native
+                                        alternative
+                                        userPreferred
+                                    }
+                                }
+                            }
                             statuses {
                                 count
                                 chaptersRead
                                 status
                             }
-                            genres(limit: 10) {
+                            genres(limit: 20) {
                                 count
                                 chaptersRead
                                 genre
                             }
-                            tags(limit: 10) {
+                            tags(limit: 20) {
                                 count
                                 chaptersRead
                                 tag {
