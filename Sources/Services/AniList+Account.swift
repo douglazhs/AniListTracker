@@ -12,28 +12,23 @@ import AuthenticationServices
 public extension AniList {
     func logIn(response: @escaping (LoginResult) -> Void) {
         let signInPromise = Future<URL, Error> { completion in
-            do {
-                let apiData = try ApiSetup.load()
-                let authUrl = self.authUrlBuilder(
-                    clientID: apiData.id,
-                    domain: "anilist.co"
-                )
-                let authSession  = ASWebAuthenticationSession(
-                    url: authUrl,
-                    callbackURLScheme: apiData.redirectURL.scheme
-                ) { (url, error) in
-                    if let error = error {
-                        completion(.failure(error))
-                    } else if let url = url {
-                        completion(.success(url))
-                    }
+            let authUrl = self.authUrlBuilder(
+                clientID: AppEnvironment.appID,
+                domain: "anilist.co"
+            )
+            let authSession  = ASWebAuthenticationSession(
+                url: authUrl,
+                callbackURLScheme: AppEnvironment.apiRedirectURL
+            ) { (url, error) in
+                if let error = error {
+                    completion(.failure(error))
+                } else if let url = url {
+                    completion(.success(url))
                 }
-                authSession.presentationContextProvider = self
-                authSession.prefersEphemeralWebBrowserSession = true
-                authSession.start()
-            } catch {
-                completion(.failure(error))
             }
+            authSession.presentationContextProvider = self
+            authSession.prefersEphemeralWebBrowserSession = true
+            authSession.start()
         }
         signInPromise.sink { (completion) in
             switch completion {
